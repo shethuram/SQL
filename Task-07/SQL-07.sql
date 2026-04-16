@@ -130,3 +130,68 @@ SELECT
         ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
     ) AS RunningTotal_Frame
 FROM Orders;
+
+-- =====================================
+-- 15. LAG() - PREVIOUS ORDER AMOUNT
+-- =====================================
+SELECT 
+    Customer,
+    OrderDate,
+    Amount,
+    LAG(Amount) OVER (
+        PARTITION BY Customer
+        ORDER BY OrderDate
+    ) AS PrevAmount
+FROM Orders;
+
+-- =====================================
+-- 16. LEAD() - NEXT ORDER AMOUNT
+-- =====================================
+SELECT 
+    Customer,
+    OrderDate,
+    Amount,
+    LEAD(Amount) OVER (
+        PARTITION BY Customer
+        ORDER BY OrderDate
+    ) AS NextAmount
+FROM Orders;
+
+-- =====================================
+-- 17. LAG() WITH OFFSET (2 ROWS BACK)
+-- =====================================
+SELECT 
+    Customer,
+    OrderDate,
+    Amount,
+    LAG(Amount, 2) OVER (
+        PARTITION BY Customer
+        ORDER BY OrderDate
+    ) AS Prev2Orders
+FROM Orders;
+
+-- =====================================
+-- 18. LAG() WITH DEFAULT VALUE
+-- =====================================
+SELECT 
+    Customer,
+    OrderDate,
+    Amount,
+    LAG(Amount, 1, 0) OVER (
+        PARTITION BY Customer
+        ORDER BY OrderDate
+    ) AS PrevAmount_Default0
+FROM Orders;
+
+-- =====================================
+-- 19. DIFFERENCE FROM PREVIOUS ORDER
+-- =====================================
+SELECT 
+    Customer,
+    OrderDate,
+    Amount,
+    Amount - LAG(Amount) OVER (
+        PARTITION BY Customer
+        ORDER BY OrderDate
+    ) AS DiffFromPrev
+FROM Orders;
