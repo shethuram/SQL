@@ -102,6 +102,15 @@ Recursive CTE executes in iterations:
 
 ---
 
+## Outputs 
+
+### Non recurive CTE 
+![](screenshots/o1.png)
+---
+### Recursive CTE 
+![](screenshots/o2.png)
+---
+
 ## ⚠️ Key Observations
 
 * Recursive queries process data level-by-level
